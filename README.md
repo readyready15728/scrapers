@@ -1,5 +1,5 @@
 # myabandonware-ratings
-A scraper to extract ratings information from the site My Abandonware
+## A scraper to extract ratings information from the site My Abandonware
 
 In the case of a single use, consider the example
 `python ratings.py http://www.myabandonware.com/browse/genre/simulation-7/ > simulation.csv`.
