@@ -6,6 +6,14 @@ from pyquery import PyQuery as pq
 
 Record = namedtuple('Record', ['title', 'avg_rating', 'no_ratings'])
 
+# Don't crap out trying to get data from the server; just keep trying
+def resilient_pq(uri):
+    while True:
+        try:
+            return pq(uri)
+        except:
+            pass
+
 games_with_ratings = []
 # Starts as e.g. http://www.myabandonware.com/browse/genre/simulation-7/ then
 # iterates through all the numbered pages listed in that category in the
@@ -13,7 +21,7 @@ games_with_ratings = []
 category_uri = sys.argv[1]
 
 while True:
-    category_page = pq(category_uri)
+    category_page = resilient_pq(category_uri)
     category_page.make_links_absolute(base_url='http://myabandonware.com/')
 
     # Runs through the <a> tags in the .name divs which link to individual
@@ -31,7 +39,7 @@ while True:
         title = '%s (%s - %d)' % (title, platform, year)
 
         game_uri = game_link.attr('href')
-        game_page = pq(game_uri)
+        game_page = resilient_pq(game_uri)
         # The <div> selected here will contain text looking something like:
         # 4.55 / 5 - 119 votes
         # 
