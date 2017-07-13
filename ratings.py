@@ -1,6 +1,6 @@
-import csv
 import re
 import sys
+import unicodecsv
 from collections import namedtuple
 from pyquery import PyQuery as pq
 
@@ -61,7 +61,7 @@ while True:
     if category_uri is None:
         break
 
-writer = csv.writer(sys.stdout)
+writer = unicodecsv.writer(sys.stdout, encoding='utf-8')
 writer.writerow(['Title', 'Average Rating', 'Number of Ratings'])
 
 for record in games_with_ratings:
