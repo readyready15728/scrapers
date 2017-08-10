@@ -2,6 +2,7 @@
 
 export PYTHONIOENCODING=utf-8
 
+mkdir ratings &> /dev/null
 rm log
 python ratings.py 'http://www.myabandonware.com/browse/genre/action-2/' > ratings/action.csv 2>> log
 python ratings.py 'http://www.myabandonware.com/browse/genre/adventure-3/' > ratings/adventure.csv 2>> log
