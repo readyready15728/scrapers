@@ -1,7 +1,10 @@
 # myabandonware-ratings
 ## A scraper to extract ratings information from the site My Abandonware
 
-In the case of a single use, consider the example
+Before you do anything else, ensure that the dependencies unicodecsv and
+PyQuery have been installed.
+
+Then, in the case of a single use, consider the example
 `python ratings.py http://www.myabandonware.com/browse/genre/simulation-7/ > simulation.csv`.
 This example illustrates two things. The first is that the sole argument to the
 scraper is any page on My Abandonware that indexes multiple games. In this
