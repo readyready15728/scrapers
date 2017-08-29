@@ -57,3 +57,4 @@ python ratings.py 'http://www.myabandonware.com/browse/theme/western-2o/' > rati
 python ratings.py 'http://www.myabandonware.com/browse/theme/world-war-i-32/' > ratings/world-war-i.csv 2>> log
 python ratings.py 'http://www.myabandonware.com/browse/theme/world-war-ii-35/' > ratings/world-war-ii.csv 2>> log
 python ratings.py 'http://www.myabandonware.com/browse/platform/amiga/' > ratings/amiga.csv 2>> log
+python ratings.py 'http://www.myabandonware.com/browse/platform/dos/' > ratings/dos.csv 2>> log
