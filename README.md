@@ -1,8 +1,8 @@
 # myabandonware-ratings
 ## A scraper to extract ratings information from the site My Abandonware
 
-Before you do anything else, ensure that the dependencies unicodecsv and
-PyQuery have been installed.
+Before you do anything else, ensure that the dependencies unicodecsv, requests
+and BeautifulSoup have been installed.
 
 Then, in the case of a single use, consider the example
 `python ratings.py http://www.myabandonware.com/browse/genre/simulation-7/ > simulation.csv`.
