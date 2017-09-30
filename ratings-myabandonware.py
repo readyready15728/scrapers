@@ -7,7 +7,7 @@ from common import *
 Record = namedtuple('Record', ['title', 'avg_rating', 'no_ratings'])
 base_uri = 'http://myabandonware.com'
 
-game = []
+games = []
 # Starts as e.g. http://www.myabandonware.com/browse/genre/simulation-7/ then
 # iterates through all the numbered pages listed in that category in the
 # range [2, n] where n is the last page
@@ -57,5 +57,5 @@ while True:
 writer = unicodecsv.writer(sys.stdout, encoding='utf-8')
 writer.writerow(['Title', 'Average Rating', 'Number of Ratings'])
 
-for game in games_with_ratings:
-    writer.writerow([record.title, '%.2f' % record.avg_rating, record.no_ratings])
+for game in games:
+    writer.writerow([game.title, '%.2f' % game.avg_rating, game.no_ratings])
