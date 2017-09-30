@@ -1,4 +1,5 @@
 **/.backup
 **/*.zip
 ratings/**
+*.pyc
 log

@@ -1,23 +1,11 @@
 import re
 import sys
 import unicodecsv
-import urlparse
 from collections import namedtuple
-import requests
-from bs4 import BeautifulSoup
+from common import *
 
 Record = namedtuple('Record', ['title', 'avg_rating', 'no_ratings'])
 base_uri = 'http://myabandonware.com'
-
-# Don't crap out trying to get data from the server; just keep trying
-def resilient_get(uri):
-    return requests.get(uri, timeout=None)
-
-def beautify(request):
-    return BeautifulSoup(request.text, 'lxml')
-
-def absolutify(base_uri, relative_uri):
-    return urlparse.urljoin(base_uri, relative_uri)
 
 games_with_ratings = []
 # Starts as e.g. http://www.myabandonware.com/browse/genre/simulation-7/ then
