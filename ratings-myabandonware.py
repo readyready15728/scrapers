@@ -7,7 +7,7 @@ from common import *
 Record = namedtuple('Record', ['title', 'avg_rating', 'no_ratings'])
 base_uri = 'http://myabandonware.com'
 
-games_with_ratings = []
+game = []
 # Starts as e.g. http://www.myabandonware.com/browse/genre/simulation-7/ then
 # iterates through all the numbered pages listed in that category in the
 # range [2, n] where n is the last page
@@ -15,7 +15,6 @@ category_uri = sys.argv[1]
 
 while True:
     category_page = beautify(resilient_get(category_uri))
-    # category_page.make_links_absolute(base_url='http://myabandonware.com/')
 
     # Runs through the <a> tags in the .name divs which link to individual
     # games in the category
@@ -44,7 +43,7 @@ while True:
 
         # The process can take a while so we'll want logging
         sys.stderr.write(title + '\n')
-        games_with_ratings.append(Record(title, avg_rating, no_ratings))
+        games.append(Record(title, avg_rating, no_ratings))
 
     # The current page is marked with the class "current". If we can find a
     # successor that is an <a> tag, we move on to that. If not, we quit and 
@@ -58,5 +57,5 @@ while True:
 writer = unicodecsv.writer(sys.stdout, encoding='utf-8')
 writer.writerow(['Title', 'Average Rating', 'Number of Ratings'])
 
-for record in games_with_ratings:
+for game in games_with_ratings:
     writer.writerow([record.title, '%.2f' % record.avg_rating, record.no_ratings])
