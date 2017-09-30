@@ -1,18 +1,23 @@
 import re
 import sys
 import unicodecsv
+import urlparse
 from collections import namedtuple
-from pyquery import PyQuery as pq
+import requests
+from bs4 import BeautifulSoup
 
 Record = namedtuple('Record', ['title', 'avg_rating', 'no_ratings'])
+base_uri = 'http://myabandonware.com'
 
 # Don't crap out trying to get data from the server; just keep trying
-def resilient_pq(uri):
-    while True:
-        try:
-            return pq(uri)
-        except:
-            pass
+def resilient_get(uri):
+    return requests.get(uri, timeout=None)
+
+def beautify(request):
+    return BeautifulSoup(request.text, 'lxml')
+
+def absolutify(base_uri, relative_uri):
+    return urlparse.urljoin(base_uri, relative_uri)
 
 games_with_ratings = []
 # Starts as e.g. http://www.myabandonware.com/browse/genre/simulation-7/ then
@@ -21,31 +26,31 @@ games_with_ratings = []
 category_uri = sys.argv[1]
 
 while True:
-    category_page = resilient_pq(category_uri)
-    category_page.make_links_absolute(base_url='http://myabandonware.com/')
+    category_page = beautify(resilient_get(category_uri))
+    # category_page.make_links_absolute(base_url='http://myabandonware.com/')
 
     # Runs through the <a> tags in the .name divs which link to individual
     # games in the category
-    for game_link in category_page('.name > a'):
-        game_link = pq(game_link)
-
-        title = game_link.text()
+    for game_link in category_page.select('.name > a'):
+        title = game_link.string
         # There is a <div> after the <div> containing the link to the game
-        # page with this good stuff in it
-        platform_and_year = game_link.parent().next()
-        platform = platform_and_year.find('.ptf').text()
-        year = int(platform_and_year.find('.year').text())
+        # page with this good stuff in it; find_next_sibling is necessary
+        # because BeautifulSoup actually considers a newline character a
+        # sibling :/
+        platform_and_year = game_link.parent.find_next_sibling(class_ = 'platyear')
+        platform = platform_and_year.find(class_ = 'ptf').string
+        year = int(platform_and_year.find(class_ = 'year').string)
         # Will look something like: The Settlers II: Gold Edition (DOS - 1997)
         title = '%s (%s - %d)' % (title, platform, year)
 
-        game_uri = game_link.attr('href')
-        game_page = resilient_pq(game_uri)
+        game_uri = game_link['href']
+        game_page = beautify(resilient_get(absolutify(base_uri, game_uri)))
         # The <div> selected here will contain text looking something like:
         # 4.55 / 5 - 119 votes
         # 
         # The question mark is there because some of the pages only say "vote"
         # due to the number of votes
-        m = re.search('((?:\d|\.)+) / 5 - (\d+) votes?', game_page('.gameRated').text())
+        m = re.search('((?:\d|\.)+) / 5 - (\d+) votes?', game_page.find(class_ = 'gameRated').get_text())
         avg_rating = float(m.group(1))
         no_ratings = int(m.group(2))
 
@@ -56,9 +61,10 @@ while True:
     # The current page is marked with the class "current". If we can find a
     # successor that is an <a> tag, we move on to that. If not, we quit and 
     # write out the csv.
-    category_uri = category_page('.current').next().attr('href')
-
-    if category_uri is None:
+    try:
+        category_uri = absolutify(base_uri, category_page.find(class_ = 'current').find_next_sibling('a')['href'])
+    except TypeError:
+        # will be reached there is an attempt to index None with 'href'
         break
 
 writer = unicodecsv.writer(sys.stdout, encoding='utf-8')
