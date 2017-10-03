@@ -51,7 +51,7 @@ while True:
     try:
         category_uri = absolutify(base_uri, category_page.find(class_ = 'current').find_next_sibling('a')['href'])
     except TypeError:
-        # will be reached if there is an attempt to index None with 'href'
+        # Will be reached if there is an attempt to index None with 'href'
         break
 
 writer = unicodecsv.writer(sys.stdout, encoding='utf-8')
