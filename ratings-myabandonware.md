@@ -1,4 +1,4 @@
-# myabandonware-ratings
+# ratings-myabandonware.py
 ## A scraper to extract ratings information from the site My Abandonware
 
 Then, in the case of a single use, consider the example
