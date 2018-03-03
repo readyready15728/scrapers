@@ -4,7 +4,11 @@ from bs4 import BeautifulSoup
 
 # Don't crap out trying to get data from the server; just keep trying
 def resilient_get(uri):
-    return requests.get(uri, timeout=None)
+    while True:
+        try:
+            return requests.get(uri, timeout=None)
+        except:
+            pass
 
 def beautify(request):
     return BeautifulSoup(request.text, 'lxml')
