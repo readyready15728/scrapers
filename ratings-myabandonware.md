@@ -15,12 +15,10 @@ shows is that the scraper will print CSV-formatted data to standard output.
 The included script `run-myabandonware.sh` shows how the scraper can be used in
 a batch setting. It scrapes a number of categories I personally consider at
 least remotely interesting, but its template can obviously be remade to fit
-another's wants. Note that it includes the line `export
-PYTHONIOENCODING=utf-8`, which makes Python deal with titles of foreign origin
-properly. Additionally, note that standard error output is redirected into a
-file called `log`. Because scraping can take a very substantial time, having a
-log can be highly desirable. If `run.sh` is run in the background, `tail -f
-log` is good for periodic checks on progress.
+another's wants. Additionally, note that standard error output is redirected
+into a file called `log`. Because scraping can take a very substantial time,
+having a log can be highly desirable. If `run.sh` is run in the background,
+`tail -f log` is good for periodic checks on progress.
 
 In any case, when all is said and done, you will have one or more .csv files
 with title, average rating and number of ratings for each game. The titles are
