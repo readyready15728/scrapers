@@ -1,6 +1,6 @@
+import csv
 import re
 import sys
-import unicodecsv
 from collections import namedtuple
 from common import *
 
@@ -54,7 +54,7 @@ while True:
         # Will be reached if there is an attempt to index None with 'href'
         break
 
-writer = unicodecsv.writer(sys.stdout, encoding='utf-8')
+writer = csv.writer(sys.stdout)
 writer.writerow(['Title', 'Average Rating', 'Number of Ratings'])
 
 for game in games:

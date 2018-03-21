@@ -1,4 +1,4 @@
-import urlparse
+import urllib
 import requests
 from bs4 import BeautifulSoup
 
@@ -14,4 +14,4 @@ def beautify(request):
     return BeautifulSoup(request.text, 'lxml')
 
 def absolutify(base_uri, relative_uri):
-    return urlparse.urljoin(base_uri, relative_uri)
+    return urllib.parse.urljoin(base_uri, relative_uri)

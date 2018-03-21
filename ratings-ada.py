@@ -1,6 +1,6 @@
+import csv
 import re
 import sys
-import unicodecsv
 from collections import namedtuple
 from common import *
 
@@ -29,7 +29,7 @@ for tr in demos_page.select('tr'):
 
         demos.append(Record(*demo))
 
-writer = unicodecsv.writer(sys.stdout, encoding='utf-8')
+writer = csv.writer(sys.stdout)
 writer.writerow(['Production', 'Year', 'Chipset', 'Category', 'Vote', 'Party', 'Pos'])
 
 for demo in demos:
