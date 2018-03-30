@@ -43,6 +43,8 @@ while True:
 
         # The process can take a while so we'll want logging
         sys.stderr.write(title + '\n')
+        # Since Python 3 this doesn't happen automatically, apparently
+        sys.stderr.flush()
         games.append(Record(title, avg_rating, no_ratings))
 
     # The current page is marked with the class "current". If we can find a
