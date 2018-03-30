@@ -18,7 +18,8 @@ least remotely interesting, but its template can obviously be remade to fit
 another's wants. Additionally, note that standard error output is redirected
 into a file called `log`. Because scraping can take a very substantial time,
 having a log can be highly desirable. If `run.sh` is run in the background,
-`tail -f log` is good for periodic checks on progress.
+`tail -f log` is good for periodic checks on progress. Ratings are deposited
+into `output/myabandonware`.
 
 In any case, when all is said and done, you will have one or more .csv files
 with title, average rating and number of ratings for each game. The titles are

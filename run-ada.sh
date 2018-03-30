@@ -1,4 +1,4 @@
 #!/bin/bash
 
-mkdir -p ratings/ada &> /dev/null
-python3 ratings-ada.py > ratings/ada/ada.csv
+mkdir -p output/ada &> /dev/null
+python3 scraper-ada.py > output/ada/ada.csv
