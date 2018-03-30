@@ -1,4 +1,4 @@
-# Ratings Scrapers
+# Scrapers
 
 Scrapers for information on various websites. Check out the Markdown file for each!
 
