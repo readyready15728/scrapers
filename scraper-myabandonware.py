@@ -18,15 +18,15 @@ while True:
 
     # Runs through the <a> tags in the .name divs which link to individual
     # games in the category
-    for game_link in category_page.select('.name > a'):
+    for game_tag in category_page.select('.item'):
+        # Skip ads and UX junk
+        if game_tag.find_all('script') or 'filler' in game_tag.attrs['class']:
+            continue
+
+        game_link = game_tag.find('a', class_='name')
         title = game_link.string
-        # There is a <div> after the <div> containing the link to the game
-        # page with this good stuff in it; find_next_sibling is necessary
-        # because BeautifulSoup actually considers a newline character a
-        # sibling :/
-        platform_and_year = game_link.parent.find_next_sibling(class_ = 'platyear')
-        platform = platform_and_year.find(class_ = 'ptf').string
-        year = int(platform_and_year.find(class_ = 'year').string)
+        platform = game_tag.find(class_ = 'ptf').string
+        year = int(game_tag.find(class_ = 'year').string)
         # Will look something like: The Settlers II: Gold Edition (DOS - 1997)
         title = '%s (%s - %d)' % (title, platform, year)
 
@@ -58,6 +58,8 @@ while True:
 
 writer = csv.writer(sys.stdout)
 writer.writerow(['Title', 'Average Rating', 'Number of Ratings'])
+# Makes sure that duplicates are filtered out
+games = set(games)
 
 for game in games:
     writer.writerow([game.title, '%.2f' % game.avg_rating, game.no_ratings])
