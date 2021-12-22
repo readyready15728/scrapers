@@ -20,7 +20,7 @@ while True:
     # games in the category
     for game_tag in category_page.select('.item'):
         # Skip ads and UX junk
-        if game_tag.find_all('script') or 'filler' in game_tag.attrs['class']:
+        if game_tag.find_all('script') or 'filler' in game_tag.attrs['class'] or 'a1222' in game_tag.attrs['class']:
             continue
 
         game_link = game_tag.find('a', class_='name')
