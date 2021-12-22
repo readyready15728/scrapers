@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir -p output/myabandonware &> /dev/null
-rm log
+rm log &> /dev/null
 python3 scraper-myabandonware.py 'https://www.myabandonware.com/browse/genre/action-1/' > output/myabandonware/action.csv 2>> log
 python3 scraper-myabandonware.py 'https://www.myabandonware.com/browse/genre/adventure-2/' > output/myabandonware/adventure.csv 2>> log
 python3 scraper-myabandonware.py 'https://www.myabandonware.com/browse/genre/educational-3/' > output/myabandonware/educational.csv 2>> log
